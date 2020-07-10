@@ -17,7 +17,7 @@ router.get("", (req, res, next) => {
     results = eventsData;
   }
   console.log('results:', results.length);
-  res.json({message: 'Data fetched successfully!', eventsList: results, maxEvents: results.length});
+  res.json({message: 'Data fetched successfully!', events: results, maxEvents: results.length});
 });
 
 router.get("/nearest/:location", (req, res, next) => {
@@ -25,7 +25,7 @@ router.get("/nearest/:location", (req, res, next) => {
   console.log("/api/events/nearest/", req.params.location);
   let results = eventsData.filter(event => event.Location.City.indexOf(pLocation) !== -1);
   console.log(results);
-  res.json({message: 'Data fetched successfully!', eventsList: results, maxEvents: results.length});
+  res.json({message: 'Data fetched successfully!', events: results, maxEvents: results.length});
 });
 
 module.exports = router;
