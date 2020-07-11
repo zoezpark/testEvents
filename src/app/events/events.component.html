@@ -6,19 +6,20 @@
           </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
-         Search: <input type="text" name="searchKeyword" id="searchKeyword" (keyup)="onSearchKeyword($event.target.value)">
-         &nbsp;&nbsp;&nbsp;&nbsp;Location: <input type="text" name="searchLocation" id="searchLocation" (keyup)="onSearchLocation($event.target.value)">
+        <div class="col-md-7">
+         Search: <input type="text" name="searchKeyword" id="searchKeyword" (keyup)="onSearchByKeyword($event.target.value)">
+         &nbsp;&nbsp;&nbsp;&nbsp;Location: <input type="text" width="50px" [(ngModel)]="searchLocation" name="searchLocation" id="searchLocation" (keyup)="onSearchByLocation($event.target.value)">
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-5">
           <mat-form-field appearance="fill">
-            <mat-label>Select Date</mat-label>
+            <mat-label>date</mat-label>
           <!-- #docregion toggle -->
-            <input matInput [matDatepicker]="picker">
+            <input matInput [matDatepicker]="picker" (dateChange)="onSearchByDate($event)">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker ></mat-datepicker>
           <!-- #enddocregion toggle -->
           </mat-form-field>
+          <button type="button" class="btn btn-success " (click)="resetFilters()">Reset</button>
         </div>
       </div>
       <div class="row" *ngIf="isLoading && events.length === 0">
