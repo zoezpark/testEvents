@@ -20,10 +20,25 @@ router.get("", (req, res, next) => {
   res.json({message: 'Data fetched successfully!', events: results, maxEvents: results.length});
 });
 
+router.get("/:title", (req, res, next) => {
+  console.log("/api/events/", req.params.title);
+  let pTitle;
+  let result;
+  if(typeof(req.params.title) !== 'undefined') {
+    pTitle = req.params.title;
+    console.log(pTitle);
+    result = eventsData.filter(event => event.Title.indexOf(pTitle) !== -1);
+    res.status(200).json(result);
+  }
+  else {
+    res.status(404).json({ message: "Event not found!" });
+  }
+});
+
 router.get("/nearest/:location", (req, res, next) => {
   const pLocation = req.params.location;
   console.log("/api/events/nearest/", req.params.location);
-  let results = eventsData.filter(event => event.Location.City.indexOf(pLocation) !== -1);
+  let results = eventsData.filter(event => event.Location.City.indexOf(pLocation) !== -1 || event.Location.State.indexOf(pLocation) !== -1|| event.Location.Country.indexOf(pLocation) !== -1);
   console.log(results);
   res.json({message: 'Data fetched successfully!', events: results, maxEvents: results.length});
 });

@@ -10,7 +10,7 @@ import { EventsService } from './events.service';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit, OnDestroy {
-  events: Event[];
+  events: Event[] = [];
   isLoading = false;
   private eventsSub: Subscription;
 
@@ -18,7 +18,8 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = false;
-    this.eventsService.getEvents();
+    this.events = [];
+    this.eventsService.getEvents('');
     this.eventsSub = this.eventsService
       .getEventsUpdateListener()
       .subscribe((eventData: { events: Event[]; maxEvents: number}) => {
@@ -31,4 +32,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.eventsSub.unsubscribe();
   }
 
+  onGetDetail($event) {
+    console.log('onGetDetail');
+    this.eventsService.getEventDetail($event);
+  }
 }

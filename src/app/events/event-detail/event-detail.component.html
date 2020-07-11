@@ -1,0 +1,24 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <img src="/assets/img/event.jpeg" width="100" class="card-img-top" alt="...">
+      </div>
+      <div class="col-md-9">
+        <div class="card" >
+          <div class="card-body">
+            <h5 class="card-title">{{event.Title}}</h5>
+            <p>{{time}}</p>
+            <p class="card-text">Location: {{event.Location.City}} {{event.Location.State}} {{event.Location.Country}}</p>
+            <p>{{seats}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-success nav-item nav-link-edit" (click)="goBack()">Go to List</button>
+      </div>
+    </div>
+  </div>
+</div>

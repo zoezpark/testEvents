@@ -17,13 +17,14 @@ export class EventsService {
   getHostURL(): string {
     return environment.API_URL;
   }
-  getEvents() {
+  getEvents(keyword: string) {
     // const queryParams = `?keyword=${keyword}`;
     // this.APIURL = this.getHostURL();
     const requestUrl = this.APIURL + '/api/events';
+    const queryParams = (keyword.length > 0) ? `?keyword=${keyword}` : '';
     this.http
       .get<{ message: string; events: any; maxEvents: number }>(
-        requestUrl
+        requestUrl + queryParams
       )
       .pipe(
         map(eventData => {
@@ -50,6 +51,15 @@ export class EventsService {
 
   getEventsUpdateListener() {
     return this.eventsUpdated.asObservable();
+  }
+  getEventDetail(title: string) {
+    return this.http.get<{
+      Title: string;
+      Time: Date;
+      Image: any;
+      Location: any;
+      AvailableSeats: any[];
+    }>(this.APIURL + '/api/events/' + title);
   }
   /*
   getEvents(keyword: string) {

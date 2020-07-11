@@ -3,5 +3,5 @@ export interface Event {
   Time: Date;
   Image: any;
   Location: any;
-  AvailableSeats: any;
+  AvailableSeats: any[];
 }
