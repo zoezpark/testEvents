@@ -61,6 +61,7 @@ export class EventsService {
       AvailableSeats: any[];
     }>(this.APIURL + '/api/events/' + title);
   }
+
   /*
   getEvents(keyword: string) {
     const queryParams = `?keyword=${keyword}`;

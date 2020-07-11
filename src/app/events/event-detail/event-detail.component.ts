@@ -14,7 +14,7 @@ export class EventDetailComponent implements OnInit {
   event: Event;
   isLoading = false;
   private title: string;
-  availableSeats: any[];
+  availableSeats: string;
   time: string;
   seats: string;
 
@@ -38,9 +38,14 @@ export class EventDetailComponent implements OnInit {
             Location: eventData[0].Location,
             AvailableSeats: eventData[0].AvailableSeats
           };
-          this.availableSeats = eventData[0].AvailableSeats;
+          // this.availableSeats = eventData[0].AvailableSeats;
           this.time = new Date(this.event.Time).toLocaleString();
-          this.seats = (this.event.AvailableSeats.length > 0 ? this.event.AvailableSeats.length + ' Left': 'Not available');
+          this.seats = (this.event.AvailableSeats ? this.event.AvailableSeats.length + ' Left' : 'Not available');
+          this.availableSeats = '';
+          this.event.AvailableSeats.forEach( seat => {
+            console.log(seat.id);
+            this.availableSeats += ' ' + seat.id.toString();
+          });
         });
       }
     });

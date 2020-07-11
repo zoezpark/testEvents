@@ -11,7 +11,7 @@ router.get("", (req, res, next) => {
   if(typeof(req.query.keyword) !== 'undefined') {
     pKeyword = req.query.keyword;
     console.log(pKeyword);
-    results = eventsData.filter(event => event.Title.indexOf(pKeyword) !== -1);
+    results = eventsData.filter(event => event.Title.toLowerCase().indexOf(pKeyword.toLowerCase()) !== -1);
   }
   else {
     results = eventsData;
@@ -27,7 +27,7 @@ router.get("/:title", (req, res, next) => {
   if(typeof(req.params.title) !== 'undefined') {
     pTitle = req.params.title;
     console.log(pTitle);
-    result = eventsData.filter(event => event.Title.indexOf(pTitle) !== -1);
+    result = eventsData.filter(event => event.Title.toLowerCase().indexOf(pTitle.toLowerCase()) !== -1);
     res.status(200).json(result);
   }
   else {
@@ -36,9 +36,9 @@ router.get("/:title", (req, res, next) => {
 });
 
 router.get("/nearest/:location", (req, res, next) => {
-  const pLocation = req.params.location;
+  const pLocation = req.params.location.toLowerCase();
   console.log("/api/events/nearest/", req.params.location);
-  let results = eventsData.filter(event => event.Location.City.indexOf(pLocation) !== -1 || event.Location.State.indexOf(pLocation) !== -1|| event.Location.Country.indexOf(pLocation) !== -1);
+  let results = eventsData.filter(event => event.Location.City.toLowerCase().indexOf(pLocation) !== -1 || event.Location.State.toLowerCase().indexOf(pLocation) !== -1|| event.Location.Country.toLowerCase().indexOf(pLocation) !== -1);
   console.log(results);
   res.json({message: 'Data fetched successfully!', events: results, maxEvents: results.length});
 });
