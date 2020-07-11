@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subject, Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
 import { Event } from './event.model';
 import { environment } from '../../environments/environment';
 
@@ -38,7 +37,8 @@ export class EventsService {
             }),
             maxEvents: eventData.maxEvents
           };
-        })
+        }),
+        catchError(this.handleError('getEvents', {events: [], maxEvents: 0 }))
       )
       .subscribe(transformedEventData => {
         this.events = transformedEventData.events;
@@ -59,9 +59,25 @@ export class EventsService {
       Image: any;
       Location: any;
       AvailableSeats: any[];
-    }>(this.APIURL + '/api/events/' + title);
+    }>(this.APIURL + '/api/events/' + title).pipe(
+      catchError(this.handleError('getEventDetail', []))
+    );
   }
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
 
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
   /*
   getEvents(keyword: string) {
     const queryParams = `?keyword=${keyword}`;
