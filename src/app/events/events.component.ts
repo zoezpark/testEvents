@@ -21,7 +21,9 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   selectedDate: string;
 
-  constructor(public eventsService: EventsService) { }
+  constructor(
+    public eventsService: EventsService
+  ) { }
 
   ngOnInit() {
     this.isLoading = false;
@@ -91,6 +93,6 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   resetFilters() {
-    this.ngOnInit();
+    window.location.reload();
   }
 }

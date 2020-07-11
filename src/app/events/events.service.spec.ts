@@ -45,6 +45,20 @@ describe('EventsService', () => {
     });
   });
   describe('getEventDetail', () => {
+    it('should call get with the correct URL', () => {
+      service.getEventDetail('Place%201').subscribe();
+      // service.getHero(4).subscribe();
+      const req = httpTestingController.expectOne('http://localhost:11443/api/events/Place%201');
+      req.flush({ Title: 'Place 2',
+      Time: '2018-07-22T02:30:00.000Z',
+      Image: 'http://example.com/image.png',
+      Location: {
+        City: 'Brisbane',
+        State: 'Queensland',
+        Country: 'Australia',
+      }});
+      httpTestingController.verify();
+    });
     it('should return event detail when the title exists', () => {
       expect(service.getEventDetail('Place%201')).toBeTruthy();
     });
